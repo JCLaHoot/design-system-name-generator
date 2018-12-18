@@ -1,4 +1,3 @@
-
 let valueSelectionContainer = document.querySelector('.value-selection');
 let valueControls = document.querySelector(".value-control-container");
 let generateButton = document.getElementById("generate-button");
@@ -57,6 +56,7 @@ fetchJSON = () => {
 
     return Promise.all([fetchValues(), fetchNames()])
 };
+
 
 
 //Creates a value slider, which allows you to control how important a value is for the naming.
@@ -187,7 +187,7 @@ const generateNames = () => {
     generateButton.classList.add('activated');
     setTimeout(() => {
         generateButton.classList.remove('activated');
-    }, 1200)
+    }, 850)
 
 };
 
