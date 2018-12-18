@@ -14,7 +14,7 @@ fetchJSON = () => {
 
     let fetchValues = () => {
         return new Promise(resolve => {
-            fetch("../data/values.json",{
+            fetch("https://jclahoot.github.io/design-system-name-generator/data/values.json",{
                 method: "get"
             }).then(function (response) {
                 if(response.status !== 200) {
@@ -35,7 +35,7 @@ fetchJSON = () => {
 
     let fetchNames = () => {
         return new Promise(resolve => {
-            fetch("../data/names.json",{
+            fetch("https://jclahoot.github.io/design-system-name-generator/data/names.json",{
                 method: "get"
             }).then(function (response) {
                 if(response.status !== 200) {
