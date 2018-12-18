@@ -1,0 +1,570 @@
+/* http://meyerweb.com/eric/tools/css/reset/
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    /*noinspection CssOverwrittenProperties*/
+    font-size: 100%;
+    /*noinspection CssOverwrittenProperties*/
+    /*font: inherit;*/
+    vertical-align: baseline;
+
+
+}
+
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+    display: block;
+}
+
+body {
+    line-height: 1;
+}
+
+ol, ul {
+    list-style: none;
+}
+
+blockquote, q {
+    quotes: none;
+}
+
+blockquote:before, blockquote:after,
+q:before, q:after {
+    /*noinspection CssOverwrittenProperties*/
+    content: '';
+    /*noinspection CssOverwrittenProperties*/
+    content: none;
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+/*
+  ========================================
+  Clearfix
+  ========================================
+*/
+
+.float-wrapper:before,
+.float-wrapper:after {
+    content: "";
+    display: table;
+}
+
+.float-wrapper:after {
+    clear: both;
+}
+
+.float-wrapper {
+    clear: both;
+    *zoom: 1;
+}
+
+
+/*
+  ========================================
+  iOS support
+  ========================================
+*/
+
+/* prevents long press popups from ruining everything 😡 */
+img {
+    -webkit-touch-callout: none;
+}
+
+/* prevents annoying selection of images that's common in iOS */
+img {
+
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+}
+
+
+/*
+  ========================================
+  Text & Fonts
+  ========================================
+*/
+
+html {
+    font-family: 'Nunito','open sans', sans-serif;
+}
+
+body {
+    font-size: 100%;
+}
+
+h1 {
+    font-size: 3.5em;
+}
+
+h2 {
+    font-size: 3em;
+}
+
+h3 {
+    font-size: 2.5em;
+}
+
+h4 {
+    font-size: 2.25em;
+}
+
+h5 {
+    font-size: 2em;
+}
+
+h6 {
+    font-size: 1.5em;
+}
+
+p {
+    font-size: 1.5em;
+}
+
+input {
+    font-size: 1.5em;
+}
+
+button {
+    font-size: 1.5em;
+    text-decoration: none;
+}
+
+/*
+  ========================================
+  Responsiveness
+  ========================================
+*/
+
+@media (max-width: 600px) {
+    body {
+        font-size: 100%;
+    }
+
+
+}
+
+@media (min-width: 601px) {
+    body {
+        font-size: 110%;
+    }
+    .app {
+        width: 90%;
+    }
+}
+
+@media (min-width: 993px) {
+    body {
+        font-size: 120%;
+    }
+    .app {
+        width: 80%;
+    }
+}
+
+@media (min-width: 1200px) {
+    body {
+        font-size: 130%;
+    }
+    .app {
+        width: 70%;
+    }
+}
+
+
+body {
+    height: 100vh;
+    width: 100vw;
+}
+
+
+
+.app {
+    height: 100%;
+    /*width: 100%;*/
+    margin: 0 auto;
+
+}
+
+.value-selection {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.value-selection button {
+    position: relative;
+    padding: 0.5em;
+    margin: 0.35em;
+    background: #616161;
+    color: white;
+    font-size: 1em;
+    font-family: 'Nanum Myeongjo', sans-serif;
+    text-transform: uppercase;
+    font-weight: bold;
+    border-radius: 0.125em;
+    border: none;
+}
+
+.value-selection button:hover {
+    transform: scale(1.1);
+    transition: all 0.2s;
+    cursor: pointer;
+}
+
+.value-selection button .bolt {
+    position: absolute;
+    width: 0.25em;
+    height: 0.25em;
+    border-radius: 100%;
+    background: #757575;
+}
+
+.value-selection button .bolt.top-left {
+    top: 0.25em;
+    left: 0.25em;
+}
+
+.value-selection button .bolt.top-right {
+    top: 0.25em;
+    left: calc(100% - 0.5em);
+}
+
+.value-selection button .bolt.bottom-right {
+    top: calc(100% - 0.5em);
+    left: calc(100% - 0.5em);
+}
+
+.value-selection button .bolt.bottom-left {
+    top: calc(100% - 0.5em);
+    left: 0.25em;
+}
+
+
+
+
+.generator {
+    margin-top: 2em;
+    display: block;
+    background-color: #616161;
+    transition: all 1s;
+}
+
+.generator .plaque {
+
+    position: relative;
+    display: inline-block;
+    margin: 1.5em;
+    background: #424242;
+    box-shadow: rgba(0,0,0,0.5) 0.125em 0.125em 0.125em;
+}
+
+.generator h3 {
+    color: #BDBDBD;
+    padding: 0.5em;
+    font-family: 'Nanum Myeongjo', serif;;
+}
+
+
+.bolt {
+    position: absolute;
+    width: 0.5em;
+    height: 0.5em;
+    border-radius: 100%;
+    background: #757575;
+    box-shadow: rgba(0,0,0,0.25) 0.05em 0.05em 0.05em;
+
+}
+
+.bolt.top-left {
+    top: 0.5em;
+    left: 0.5em;
+}
+
+.bolt.top-right {
+    top: 0.5em;
+    left: calc(100% - 1em);
+}
+
+.bolt.bottom-right {
+    top: calc(100% - 1em);
+    left: calc(100% - 1em);
+}
+
+.bolt.bottom-left {
+    top: calc(100% - 1em);
+    left: 0.5em;
+}
+
+
+
+
+.value-control-container {
+    margin: 1em;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    transition: all 0.5s;
+    min-height: 8em;
+}
+
+.value-icon {
+    position: relative;
+    color: #212121;
+    transition: all 0.25s;
+}
+.value-icon:hover {
+    color: #FF5722;
+}
+
+.value-icon:hover .tooltip{
+transform: scale(1);
+}
+
+.value-icon .tooltip {
+    position: absolute;
+    min-width: 5em;
+    padding: 0.25em;
+    background: #424242;
+    top: -3em;
+    left: -2.5em;
+    border: #FF5722 0.125em solid;
+    border-radius: 0.5em;
+    font-family: 'Nanum Myeongjo', sans-serif;
+    text-align: center;
+    text-transform: capitalize;
+    color: #BDBDBD;
+    z-index: 10000;
+    transform: scale(0);
+    transform-origin: 50% 100%;
+    transition: all 0.15s;
+}
+
+.value-icon .tooltip:after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border: 0.875em solid transparent;
+    border-top-color: #424242;
+    border-bottom: 0;
+    margin-left: -0.875em;
+    margin-bottom: -0.875em;
+}
+
+.value-icon .tooltip:before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border: 1em solid transparent;
+    border-top-color: #FF5722;
+    border-bottom: 0;
+    margin-left: -1em;
+    margin-bottom: -1.1em;
+}
+
+.value-control {
+    padding: 0.5em;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+}
+
+.delete {
+    color: #212121;
+    cursor: pointer;
+    opacity: 0;
+    transition: all 0.2s;
+}
+
+.value-control:hover .delete {
+    opacity: 1;
+}
+
+
+.delete:hover  {
+
+    color: #FF5722;
+}
+
+/*
+========================================
+Inputs
+========================================
+*/
+
+input[type=range] {
+    /* Override default CSS styles */
+    /*font-size: 100%;*/
+
+    -webkit-appearance: none;
+    appearance: none;
+    cursor: pointer;
+    border-radius: 1em;
+    height: 0.25em;
+    width: 6em;
+    background: #212121;
+    outline: none;
+    margin: 0 0.5em;
+    z-index: 9999;
+}
+
+
+/* The slider handle (use webkit (Chrome, Opera, Safari, Edge) and moz (Firefox) to override default look) */
+input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none; /* Override default look */
+    appearance: none;
+    width: 1em;
+    height: 1em;
+    background: #616161;
+    cursor: pointer;
+    border: 0.1rem white solid;
+    border-radius: 25%;
+    transition: all 0.2s;
+
+
+}
+
+input[type=range]::-moz-range-thumb {
+    -webkit-appearance: none; /* Override default look */
+    appearance: none;
+    width: 1em;
+    height: 1em;
+    background: #616161;
+    cursor: pointer;
+    border: 0.1rem white solid;
+    border-radius: 25%;
+    transition: all 0.2s;
+
+}
+
+input[type=range]::-webkit-slider-thumb:hover {
+    transform: scale(1.2);
+    background: #FF5722;;
+    /*width: 1.25em;*/
+    /*height: 1.25em;*/
+}
+
+input[type=range]::-moz-range-thumb:hover {
+    /*width: 1.25em;*/
+    /*height: 1.25em;*/
+}
+
+input[type=range]::-webkit-slider-thumb:active {
+    box-shadow: inset 0px 0px 400px 110px rgba(0, 0, 0, .1);
+}
+
+input[type=range]::-moz-range-thumb:active {
+    box-shadow: inset 0px 0px 400px 110px rgba(0, 0, 0, .1);
+}
+
+.generator-bottom {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+
+#generate-button {
+    display: inline-block;
+    position: relative;
+    cursor: pointer;
+    margin-top: 4em;
+
+}
+
+#generate-button .gear {
+    position: absolute;
+    top: -0.5em;
+    left: 0.4em;
+    color: #212121;
+    font-size: 6em;
+    transform: rotate(0deg);
+    transition: all 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+
+}
+
+#generate-button .lever {
+    position: absolute;
+    top: -0.275em;
+    left: 0.1875em;
+    color: #212121;
+    font-size: 6em;
+    transform-origin: 72% 28%;
+    transform: rotate(74deg);
+    transition: all 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+
+
+}
+
+#generate-button.activated .gear {
+    transform: rotate(140deg);
+}
+
+#generate-button.activated .lever {
+    transform: rotate(204deg);
+}
+
+.generate-plaque {
+    position: relative;
+    display: inline-block;
+    padding: 0.5em;
+    background: #424242;
+    line-height: normal;
+    margin-bottom: 1.5em;
+    margin-left: 1.5em;
+    box-shadow: rgba(0,0,0,0.5) 0.125em 0.125em 0.125em;
+}
+
+#generate-button p {
+    width: auto;
+    /*height: 4em;*/
+    color: #BDBDBD;
+    padding: 0.5em;
+    font-family: 'Nanum Myeongjo', serif;
+    font-weight: bold;
+    transition: all 0.2s;
+}
+
+#generate-button:hover p {
+    color: #FF5722;
+
+}
+
+
+.name-output {
+    display: inline-block;
+    margin: auto;
+    width: 70%;
+}

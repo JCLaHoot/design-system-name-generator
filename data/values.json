@@ -1,0 +1,45 @@
+{
+  "values": {
+    "BEAUTY" : {
+      "name" : "beauty",
+      "icon" : "camera"
+    },
+    "CALM" : {
+      "name" : "calm",
+      "icon" : "moon"
+    },
+    "CLARITY" : {
+      "name" : "clarity",
+      "icon" : "mug-hot"
+    },
+    "CREATIVITY" : {
+      "name" : "creativity",
+      "icon" : "hat-wizard"
+    },
+    "CURIOSITY" : {
+      "name" : "curiosity",
+      "icon" : "flask"
+    },
+    "EMPATHY" : {
+      "name" : "empathy",
+      "icon" : "hand-holding-heart"
+    },
+    "FUN" : {
+      "name" : "fun",
+      "icon" : "snowboarding"
+    },
+    "INTELLIGENCE" : {
+      "name" : "intelligence",
+      "icon" : "graduation-cap"
+    },
+    "KINDNESS" : {
+      "name" : "kindness",
+      "icon" : "heart"
+    },
+    "TRUSTWORTHY" : {
+      "name" : "trustworthiness",
+      "icon" : "handshake"
+    }
+  }
+
+}

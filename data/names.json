@@ -1,0 +1,58 @@
+{
+  "names" : {
+    "apple" : {
+      "values" : {
+        "BEAUTY" : 0.8,
+        "CURIOSITY" : 1,
+        "FUN" : 0.5
+      }
+    },
+    "orange" : {
+      "values" : {
+        "BEAUTY" : 0.2,
+        "FUN" : 0.8,
+        "KINDNESS" : 0.5
+      }
+    },
+    "broccoli" : {
+      "values" : {
+        "FUN" : -0.9,
+        "CALM" : 0.7,
+        "INTELLIGENCE" : 0.9
+      }
+    },
+    "watermelon" : {
+      "values" : {
+        "BEAUTY" : 0.9,
+        "CREATIVITY" : 0.5,
+        "FUN" : 0.9
+      }
+    },
+    "peach" : {
+      "values" : {
+        "BEAUTY" : 0.2,
+        "CURIOSITY" : 1,
+        "FUN" : 1
+      }
+    },
+    "eggplant" : {
+      "values" : {
+        "BEAUTY" : 0.5,
+        "CURIOSITY" : 1,
+        "FUN" : 1,
+        "INTELLIGENCE" : 0.6
+      }
+    },
+    "blueberry" : {
+      "values" : {
+        "BEAUTY" : 0.2,
+        "CREATIVITY": 1,
+        "INTELLIGENCE" : 1,
+        "CURIOSITY" : 1,
+        "FUN" : 0.2
+      }
+    }
+
+
+  }
+}
