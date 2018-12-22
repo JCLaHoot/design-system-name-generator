@@ -1,5 +1,6 @@
 let valueSelectionContainer = document.querySelector('.value-selection');
 let valueControls = document.querySelector(".value-control-container");
+let particleParent = document.querySelector(".particle-parent");
 let generateButton = document.getElementById("generate-button");
 let nameOutput = document.querySelector('.name-output');
 //
@@ -7,6 +8,7 @@ let nameOutput = document.querySelector('.name-output');
 let valueList;
 let nameList;
 let selectedValues = {};
+
 
 //gets the names and the values from their JSON files.
 // There's almost certainly a better way to do this! 😅
@@ -92,6 +94,10 @@ const createValueSlider = (value) => {
     let deleteValue = () => {
         delete selectedValues[value];
         container.remove();
+
+        if (Object.keys(selectedValues).length === 0) {
+            generateButton.classList.add('disabled')
+        }
     };
 
     let x = document.createElement("span");
@@ -114,32 +120,38 @@ const addValueToList = (event) => {
         createValueSlider(value);
     }
 
+    generateButton.classList.remove('disabled')
+
 };
 
 
 // lists all of the values in an array
 const generateValues = () => {
-    for (let value in valueList) {
-        let button = document.createElement('button');
-        button.innerHTML = valueList[value].name;
-        button.value = value;
-        button.addEventListener("click", addValueToList);
+    return new Promise(resolve => {
+        for (let value in valueList) {
+            let button = document.createElement('button');
+            button.innerHTML = valueList[value].name;
+            button.value = value;
+            button.addEventListener("click", addValueToList);
 
-        let bolt1 = document.createElement('div');
-        bolt1.classList.add('bolt', 'top-left');
-        let bolt2 = document.createElement('div');
-        bolt2.classList.add('bolt', 'top-right');
-        let bolt3 = document.createElement('div');
-        bolt3.classList.add('bolt', 'bottom-right');
-        let bolt4 = document.createElement('div');
-        bolt4.classList.add('bolt', 'bottom-left');
-        button.appendChild(bolt1);
-        button.appendChild(bolt2);
-        button.appendChild(bolt3);
-        button.appendChild(bolt4);
+            let bolt1 = document.createElement('div');
+            bolt1.classList.add('bolt', 'top-left');
+            let bolt2 = document.createElement('div');
+            bolt2.classList.add('bolt', 'top-right');
+            let bolt3 = document.createElement('div');
+            bolt3.classList.add('bolt', 'bottom-right');
+            let bolt4 = document.createElement('div');
+            bolt4.classList.add('bolt', 'bottom-left');
+            button.appendChild(bolt1);
+            button.appendChild(bolt2);
+            button.appendChild(bolt3);
+            button.appendChild(bolt4);
 
-        valueSelectionContainer.appendChild(button)
-    }
+            valueSelectionContainer.appendChild(button)
+            resolve()
+        }
+    });
+
 };
 
 
@@ -192,9 +204,76 @@ const generateNames = () => {
 };
 
 
-
-
 generateButton.addEventListener("click", generateNames);
+
+
+
+//✨ANIMATION_HELPERS
+// creates new particles and puts them in the specified parent
+let createParticles = (element, parent, quantity) => {
+    element.classList.add('particle', 'new');
+
+    for (let i = 0; i < quantity; i++) {
+        let newElement = element.cloneNode(true);
+        parent.appendChild(newElement);
+    }
+
+    // waits 10 millis for element to properly render.
+    //TODO replace timeout with the actual event that detects the element's render state
+    return new Promise((resolve) => {
+        setTimeout( () => {
+            resolve();
+        }, 10);
+    })
+};
+
+//✨ANIMATION_HELPERS
+// takes the particles in a parent and disperses them
+let disperseParticles = (parent, area) => {
+
+    return new Promise(resolve => {
+
+        parent.querySelectorAll('.particle.new').forEach((particle) => {
+            let topModifier = Math.floor(Math.random()*area);
+            let leftModifier = Math.floor(Math.random()*area);
+            let leftPositive = Math.round(Math.random()) === 1;
+            let topVal = -topModifier * 6 - 100;
+            let leftVal = leftPositive ? 40 + leftModifier : -leftModifier + 40;
+
+            particle.addEventListener('transitionend', (event) => {
+                event.target.remove();
+                //resolves the promise once the transition ends
+                resolve();
+            });
+
+            particle.style.opacity = '0';
+            particle.style.top = `${topVal}%`;
+            particle.style.left = `${leftVal}%`;
+            particle.classList.remove('new');
+        });
+
+    });
+
+
+};
+
+//✨ANIMATION_HELPERS
+// returns a Promise
+ let particleEffect = (element, parent, quantity, area) => {
+
+    return new Promise(resolve => {
+        createParticles(element,parent,quantity)
+            .then(()=> {
+                disperseParticles(parent, area)
+                    .then(()=> {
+                        resolve();
+                        //    particle render is complete
+                    });
+            })
+    });
+
+};
+
 
 
 
@@ -202,10 +281,17 @@ generateButton.addEventListener("click", generateNames);
 
 // Lifecycle event that runs after all the content is loaded to the DOM
 document.addEventListener('DOMContentLoaded', (event) => {
-    fetchJSON().then(() => {
-        generateValues();
-        console.log('done')
-    });
+    fetchJSON()
+        .then(generateValues)
+        .then(() => {
+            let particle = document.createElement('span');
+            particle.classList.add('fas','fa-cloud');
+
+            setInterval(()=> {
+                particleEffect(particle, particleParent, 5, 50);
+            }, 500);
+            console.log("done");
+        });
 
 });
 

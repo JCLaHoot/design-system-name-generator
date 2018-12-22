@@ -214,6 +214,7 @@ body {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
+    width: 80%;
 }
 
 .value-selection button {
@@ -265,25 +266,67 @@ body {
 }
 
 
+.generator-top {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+}
+
+.funnel {
+    position: relative;
+    height: 3em;
+    width: 18em;
+    background-color: #424242;
+    margin-left: 2em;
+    border-radius: 0% 0% 30% 30% / 0% 0% 100% 100% ;
+
+}
+
+.smoke-stack {
+    height: 3em;
+    width: 5em;
+    margin-right: 2em;
+    background-color: #424242;
+}
 
 
-.generator {
-    margin-top: 2em;
+.particle-parent {
+    height: 3em;
+    width: 5em;
+    position: absolute;
+}
+
+.particle {
+    position: absolute;
+    left: calc(50% - 0.5em);
+    top: 5%;
+    transition: all 3s;
+    opacity: 1;
+    z-index: -999;
+    color: #FF5722;
+    font-size: 1.5em;
+}
+
+.generator-body {
     display: block;
     background-color: #616161;
+    border-radius: 0.125em;
     transition: all 1s;
 }
 
-.generator .plaque {
+.generator-body .plaque {
 
     position: relative;
     display: inline-block;
     margin: 1.5em;
+    border-radius: 0.125em;
     background: #424242;
     box-shadow: rgba(0,0,0,0.5) 0.125em 0.125em 0.125em;
 }
 
-.generator h3 {
+.generator-body h3 {
     color: #BDBDBD;
     padding: 0.5em;
     font-family: 'Nanum Myeongjo', serif;;
@@ -501,8 +544,17 @@ input[type=range]::-moz-range-thumb:active {
     position: relative;
     cursor: pointer;
     margin-top: 4em;
-
 }
+
+#generate-button.disabled {
+    pointer-events: none;
+    opacity: 0.75;
+}
+
+#generate-button.disabled .generate-plaque {
+    box-shadow: none;
+}
+
 
 #generate-button .gear {
     position: absolute;
@@ -512,7 +564,24 @@ input[type=range]::-moz-range-thumb:active {
     font-size: 6em;
     transform: rotate(0deg);
     transition: all 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
 
+
+#generate-button .gear-center {
+    position: absolute;
+    display: block;
+    width: 3em;
+    height: 3em;
+    border-radius: 100%;
+    top: -1.5em;
+    left: 4em;
+    background-color: #616161;
+    transition: all 0.2s;
+
+}
+
+#generate-button:hover .gear-center {
+    background-color: #FF5722;
 }
 
 #generate-button .lever {
@@ -524,7 +593,6 @@ input[type=range]::-moz-range-thumb:active {
     transform-origin: 72% 28%;
     transform: rotate(74deg);
     transition: all 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-
 
 }
 
@@ -544,6 +612,7 @@ input[type=range]::-moz-range-thumb:active {
     line-height: normal;
     margin-bottom: 1.5em;
     margin-left: 1.5em;
+    border-radius: 0.125em;
     box-shadow: rgba(0,0,0,0.5) 0.125em 0.125em 0.125em;
 }
 
