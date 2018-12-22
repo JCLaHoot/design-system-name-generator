@@ -374,6 +374,7 @@ body {
     justify-content: space-evenly;
     transition: all 0.5s;
     min-height: 8em;
+    transform: ;
 }
 
 .value-icon {

@@ -84,16 +84,34 @@ const createValueSlider = (value) => {
     slider.step = '0.05';
 
 
+    let particle = document.createElement('span');
+    particle.classList.add('fas',`fa-${valueList[value].icon}`);
+
+    let interval;
+
+    interval = setInterval(()=> {
+        particleEffect(particle, particleParent, 2, 50);
+    }, 750);
+
+
     let onInput = (event) => {
         selectedValues[value] = Number(event.target.value);
-        console.log(selectedValues);
+
+        clearInterval(interval);
+        interval = setInterval(()=> {
+            particleEffect(particle, particleParent, Math.round(event.target.value), 50);
+        }, 750);
     };
     slider.addEventListener("input", onInput);
+
+
+
 
     // deletes the value from the machine
     let deleteValue = () => {
         delete selectedValues[value];
         container.remove();
+        clearInterval(interval);
 
         if (Object.keys(selectedValues).length === 0) {
             generateButton.classList.add('disabled')
@@ -119,6 +137,7 @@ const addValueToList = (event) => {
         selectedValues[value] = 2;
         createValueSlider(value);
     }
+
 
     generateButton.classList.remove('disabled')
 
@@ -223,7 +242,7 @@ let createParticles = (element, parent, quantity) => {
     return new Promise((resolve) => {
         setTimeout( () => {
             resolve();
-        }, 10);
+        }, 20);
     })
 };
 
@@ -237,8 +256,10 @@ let disperseParticles = (parent, area) => {
             let topModifier = Math.floor(Math.random()*area);
             let leftModifier = Math.floor(Math.random()*area);
             let leftPositive = Math.round(Math.random()) === 1;
+            let rotatePositive = Math.round(Math.random()) === 1;
             let topVal = -topModifier * 6 - 100;
             let leftVal = leftPositive ? 40 + leftModifier : -leftModifier + 40;
+            let rotation =  Math.round(Math.random() * 90) * (rotatePositive ? 1 : -1 );
 
             particle.addEventListener('transitionend', (event) => {
                 event.target.remove();
@@ -249,6 +270,8 @@ let disperseParticles = (parent, area) => {
             particle.style.opacity = '0';
             particle.style.top = `${topVal}%`;
             particle.style.left = `${leftVal}%`;
+            particle.style.transform = `rotate(${rotation}deg`;
+
             particle.classList.remove('new');
         });
 
@@ -285,11 +308,11 @@ document.addEventListener('DOMContentLoaded', (event) => {
         .then(generateValues)
         .then(() => {
             let particle = document.createElement('span');
-            particle.classList.add('fas','fa-cloud');
+            particle.classList.add('fas','fa-circle');
 
             setInterval(()=> {
-                particleEffect(particle, particleParent, 5, 50);
-            }, 500);
+                particleEffect(particle, particleParent, 1, 50);
+            }, 750);
             console.log("done");
         });
 
