@@ -164,7 +164,12 @@ button {
     body {
         font-size: 100%;
     }
-
+    .column {
+        width: 90%;
+    }
+    .generator-centre {
+        width: 90%;
+    }
 
 }
 
@@ -172,8 +177,12 @@ button {
     body {
         font-size: 110%;
     }
-    .app {
-        width: 90%;
+    .column {
+        width: 80%;
+    }
+
+    .generator-centre {
+        width: 80%;
     }
 }
 
@@ -181,8 +190,11 @@ button {
     body {
         font-size: 120%;
     }
-    .app {
-        width: 80%;
+    .column {
+        width: 70%;
+    }
+    .generator-centre {
+        width: 70%;
     }
 }
 
@@ -190,8 +202,11 @@ button {
     body {
         font-size: 130%;
     }
-    .app {
-        width: 70%;
+    .column {
+        width: 60%;
+    }
+    .generator-centre {
+        width: 60%;
     }
 }
 
@@ -201,6 +216,11 @@ body {
     width: 100vw;
 }
 
+.column {
+    /*width: 90%;*/
+    margin: 0 auto;
+
+}
 
 
 .app {
@@ -209,6 +229,12 @@ body {
     margin: 0 auto;
 
 }
+
+/*
+  ========================================
+  Value selection
+  ========================================
+*/
 
 .value-selection {
     display: flex;
@@ -266,6 +292,111 @@ body {
 }
 
 
+/*
+  ========================================
+  Generator structure
+  ========================================
+*/
+
+.generator {
+    display: flex;
+    flex-direction: row;
+}
+
+.generator-centre {
+    margin: 0 auto;
+
+}
+
+.pipes {
+    margin-top: 3em;
+    flex-grow: 1;
+    position: relative;
+    align-self: center;
+    /*display: flex;*/
+    /*justify-content: space-evenly;*/
+    /*flex-direction: column;*/
+}
+
+/*
+  ========================================
+  Pipes
+  ========================================
+*/
+
+.pipe {
+    position: relative;
+    width: 100%;
+    height: 3em;
+    margin: 1em 0;
+    background: linear-gradient(#9E9E9E, #424242 45% , #212121 85%);
+    display: flex;
+    flex-direction: row;
+}
+
+.pipe.large {
+    height: 5em;
+    margin: 2em 0;
+}
+
+.pipe.small {
+    height: 1.5em;
+    margin: 0.5em 0;
+}
+
+.pipe-joint {
+    position: relative;
+    margin: 0 auto;
+    width: 0.5em;
+    height: calc(100% + 0.25em);
+    top: -0.125em;
+    background: linear-gradient(#757575, #424242 45% , #212121 85%);;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    border-radius: 0.125em;
+    box-shadow: rgba(0,0,0,0.5) 0.05em 0.05em 0.05em;
+
+}
+
+.pipe-joint .bolt {
+    background-color: #616161;
+    position: relative;
+    width: 0.25em;
+    height: 0.25em;
+
+}
+
+
+
+/*.pipe::before {*/
+    /*position: absolute;*/
+    /*content: '';*/
+    /*width: 10px;*/
+    /*height: calc(100% + 0.25em);*/
+    /*top: -0.125em;*/
+    /*left: 30%;*/
+    /*background: red;*/
+/*}*/
+
+/*.pipe::after {*/
+    /*position: absolute;*/
+    /*content: '';*/
+    /*width: 10px;*/
+    /*height: calc(100% + 0.25em);*/
+    /*top: -0.125em;*/
+    /*left: 65%;*/
+    /*background: red;*/
+/*}*/
+
+
+/*
+  ========================================
+  Top of Generator
+  ========================================
+*/
+
 .generator-top {
     width: 100%;
     display: flex;
@@ -276,9 +407,10 @@ body {
 
 .funnel {
     position: relative;
+    /*margin-top: 0.25em;*/
     height: 3em;
     width: 18em;
-    background-color: #424242;
+    background: linear-gradient(145deg, #9E9E9E, #424242 35%, #212121);
     margin-left: 2em;
     border-radius: 0% 0% 30% 30% / 0% 0% 100% 100% ;
 
@@ -287,8 +419,12 @@ body {
 .smoke-stack {
     height: 3em;
     width: 5em;
+    /*margin-top: 0.25em;*/
+
     margin-right: 2em;
-    background-color: #424242;
+    /*background-color: #424242;*/
+    border-radius: 15% 15% 0% 0% / 15% 15% 0% 0% ;
+    background: linear-gradient(90deg, #9E9E9E, #424242 35%, #212121);
 }
 
 
@@ -327,7 +463,9 @@ body {
 }
 
 .generator-body h3 {
-    color: #BDBDBD;
+    /*color: #BDBDBD;*/
+    color: #FF5722;
+    text-shadow: 0 0 0.25em #DD2C00;
     padding: 0.5em;
     font-family: 'Nanum Myeongjo', serif;;
 }
@@ -374,7 +512,6 @@ body {
     justify-content: space-evenly;
     transition: all 0.5s;
     min-height: 8em;
-    transform: ;
 }
 
 .value-icon {
@@ -384,10 +521,13 @@ body {
 }
 .value-icon:hover {
     color: #FF5722;
+    text-shadow: 0 0 0.5em #DD2C00;
 }
 
 .value-icon:hover .tooltip{
 transform: scale(1);
+    text-shadow: none;
+
 }
 
 .value-icon .tooltip {
@@ -398,6 +538,7 @@ transform: scale(1);
     top: -3em;
     left: -2.5em;
     border: #FF5722 0.125em solid;
+    box-shadow: 0 0 0.5em #DD2C00;
     border-radius: 0.5em;
     font-family: 'Nanum Myeongjo', sans-serif;
     text-align: center;
@@ -460,6 +601,7 @@ transform: scale(1);
 .delete:hover  {
 
     color: #FF5722;
+    text-shadow: 0 0 0.5em #DD2C00;
 }
 
 /*
@@ -516,6 +658,8 @@ input[type=range]::-moz-range-thumb {
 input[type=range]::-webkit-slider-thumb:hover {
     transform: scale(1.2);
     background: #FF5722;;
+    box-shadow: 0 0 0.25em #DD2C00;
+
     /*width: 1.25em;*/
     /*height: 1.25em;*/
 }
@@ -583,6 +727,7 @@ input[type=range]::-moz-range-thumb:active {
 
 #generate-button:hover .gear-center {
     background-color: #FF5722;
+    box-shadow: 0em 0em 2em 0.5em #DD2C00;
 }
 
 #generate-button .lever {
@@ -629,12 +774,86 @@ input[type=range]::-moz-range-thumb:active {
 
 #generate-button:hover p {
     color: #FF5722;
+    text-shadow: 0 0 0.25em #DD2C00;
 
 }
 
-
 .name-output {
-    display: inline-block;
+    /*display: inline-block;*/
     margin: auto;
     width: 70%;
+}
+
+.output-frame {
+    position: relative;
+    /*display: inline-block;*/
+    border-radius: 0.125em;
+    box-shadow: rgba(0,0,0,0.5) 0.125em 0.125em 0.125em;
+    background-color: #424242;
+    height: 5em;
+    margin: 1em;
+}
+
+.output-frame .bolt {
+    width: 0.3em;
+    height: 0.3em;
+}
+
+.output-frame .top-left.bolt {
+    top: 0.25em;
+    left: 0.25em;
+}
+.output-frame .top-right.bolt {
+    top: 0.25em;
+    left: calc(100% - 0.5em);
+}
+.output-frame .bottom-right.bolt {
+    top: calc(100% - 0.5em);
+    left: calc(100% - 0.5em);
+
+}
+.output-frame .bottom-left.bolt {
+    top: calc(100% - 0.5em);
+    left: 0.25em;
+}
+
+.output-door {
+    position: absolute;
+    background-color: #212121;
+    top:0;
+    margin: 0.75em;
+    width: calc(100% - 1.5em);
+    height: 3.5em;;
+}
+
+.output-glow {
+    position: absolute;
+    background-color: #FF5722;
+    box-shadow: #DD2C00 0 0 1.5em 0.25em;
+    bottom:0;
+    margin: 0.75em;
+    width: calc(100% - 1.5em);
+    height: 0.125em;
+}
+
+.conveyor {
+    position: relative;
+
+}
+
+.belt {
+    position: absolute;
+    top: -1em;
+    /*margin: 1em;*/
+    height: 5em;
+    width: 100%;
+    background: #9E9E9E;
+    clip-path: polygon(6% 0, 94% 0, 100% 100%, 0 100%);
+}
+
+
+
+.name-list {
+    display: inline-block;
+
 }

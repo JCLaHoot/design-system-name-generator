@@ -2,7 +2,7 @@ let valueSelectionContainer = document.querySelector('.value-selection');
 let valueControls = document.querySelector(".value-control-container");
 let particleParent = document.querySelector(".particle-parent");
 let generateButton = document.getElementById("generate-button");
-let nameOutput = document.querySelector('.name-output');
+let nameOutput = document.querySelector('.name-list');
 //
 
 let valueList;
@@ -207,7 +207,7 @@ const generateNames = () => {
        return (name[0]);
     });
 
-    let results = document.createElement('h3');
+    let results = document.createElement('h5');
     results.innerHTML = bestNames.join(', ');
     nameOutput.childNodes.forEach((node) => {
         node.remove();
@@ -298,6 +298,29 @@ let disperseParticles = (parent, area) => {
 };
 
 
+ let renderPipes = () => {
+     return new Promise(resolve => {
+         let pipes = Array.from(document.querySelectorAll('.pipe'));
+
+         let bolt = document.createElement('div');
+         bolt.classList.add('bolt');
+
+         let joint = document.createElement('div');
+         joint.classList.add('pipe-joint');
+         joint.appendChild(bolt.cloneNode(true));
+         joint.appendChild(bolt.cloneNode(true));
+
+         pipes.forEach((pipe) => {
+             let quantity = Math.ceil(Math.random() * 3)
+
+             for (let i = 0; i < quantity; i++) {
+                 pipe.appendChild(joint.cloneNode(true));
+             }
+
+         });
+         resolve();
+     })
+ };
 
 
 
@@ -307,6 +330,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
     fetchJSON()
         .then(generateValues)
         .then(() => {
+            renderPipes();
             let particle = document.createElement('span');
             particle.classList.add('fas','fa-circle');
 
