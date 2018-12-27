@@ -2,7 +2,7 @@ let valueSelectionContainer = document.querySelector('.value-selection');
 let valueControls = document.querySelector(".value-control-container");
 let particleParent = document.querySelector(".particle-parent");
 let generateButton = document.getElementById("generate-button");
-let nameOutput = document.querySelector('.name-list');
+let nameOutput = document.querySelector('.name-output');
 //
 
 let valueList;
@@ -207,12 +207,42 @@ const generateNames = () => {
        return (name[0]);
     });
 
-    let results = document.createElement('h5');
-    results.innerHTML = bestNames.join(', ');
-    nameOutput.childNodes.forEach((node) => {
-        node.remove();
+    let outputFrame = document.querySelector('.output-frame');
+    outputFrame.classList.add('open');
+
+    // removes old results
+    Array.from(document.querySelectorAll('.result')).forEach((result) => {
+        result.remove();
     });
-    nameOutput.appendChild(results);
+
+    // puts names into the DOM
+    let result = document.createElement('h5');
+    result.classList.add('result');
+    result.innerHTML = bestNames[0];
+    result.style.opacity = '0';
+
+
+    nameOutput.appendChild(result);
+
+    setTimeout(() => {
+        result.style.opacity = '1';
+        result.style.transition = 'all 1.55s linear';
+        setTimeout(() => {
+            result.style.top = '3.5em';
+            result.style.transform = 'scale(1.25)';
+
+
+            setTimeout(() => {
+                result.style.transition = 'all 0.75s cubic-bezier(0.55, 0.085, 0.68, 0.53)';
+                result.style.top = '7em';
+                result.style.transform = 'scale(1.45)';
+                result.style.color = '#FF5722';
+
+
+            }, 1600)
+        }, 500)
+    }, 350);
+
 
 
     generateButton.classList.add('activated');

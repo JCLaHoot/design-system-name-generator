@@ -224,10 +224,9 @@ body {
 
 
 .app {
-    height: 100%;
+    /*height: 100%;*/
     /*width: 100%;*/
     margin: 0 auto;
-
 }
 
 /*
@@ -370,26 +369,6 @@ body {
 
 
 
-/*.pipe::before {*/
-    /*position: absolute;*/
-    /*content: '';*/
-    /*width: 10px;*/
-    /*height: calc(100% + 0.25em);*/
-    /*top: -0.125em;*/
-    /*left: 30%;*/
-    /*background: red;*/
-/*}*/
-
-/*.pipe::after {*/
-    /*position: absolute;*/
-    /*content: '';*/
-    /*width: 10px;*/
-    /*height: calc(100% + 0.25em);*/
-    /*top: -0.125em;*/
-    /*left: 65%;*/
-    /*background: red;*/
-/*}*/
-
 
 /*
   ========================================
@@ -445,6 +424,14 @@ body {
     font-size: 1.5em;
 }
 
+
+/*
+  ========================================
+  Generator centre
+  ========================================
+*/
+
+
 .generator-body {
     display: block;
     background-color: #616161;
@@ -453,16 +440,16 @@ body {
 }
 
 .generator-body .plaque {
-
+    width: calc(100% - 3em );
     position: relative;
     display: inline-block;
-    margin: 1.5em;
+    margin: 1.5em 1.5em 1em 1.5em;
     border-radius: 0.125em;
     background: #424242;
     box-shadow: rgba(0,0,0,0.5) 0.125em 0.125em 0.125em;
 }
 
-.generator-body h3 {
+.generator-body h5 {
     /*color: #BDBDBD;*/
     color: #FF5722;
     text-shadow: 0 0 0.25em #DD2C00;
@@ -473,8 +460,8 @@ body {
 
 .bolt {
     position: absolute;
-    width: 0.5em;
-    height: 0.5em;
+    width: 0.375em;
+    height: 0.375em;
     border-radius: 100%;
     background: #757575;
     box-shadow: rgba(0,0,0,0.25) 0.05em 0.05em 0.05em;
@@ -482,36 +469,42 @@ body {
 }
 
 .bolt.top-left {
-    top: 0.5em;
-    left: 0.5em;
+    top: 0.375em;
+    left: 0.375em;
 }
 
 .bolt.top-right {
-    top: 0.5em;
-    left: calc(100% - 1em);
+    top: 0.375em;
+    left: calc(100% - 0.75em);
 }
 
 .bolt.bottom-right {
-    top: calc(100% - 1em);
-    left: calc(100% - 1em);
+    top: calc(100% - 0.75em);
+    left: calc(100% - 0.75em);
 }
 
 .bolt.bottom-left {
-    top: calc(100% - 1em);
-    left: 0.5em;
+    top: calc(100% - 0.75em);
+    left: 0.375em;
 }
 
+
+/*
+  ========================================
+  Value controls
+  ========================================
+*/
 
 
 
 .value-control-container {
-    margin: 1em;
+    margin: 0 1em;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: space-evenly;
     transition: all 0.5s;
-    min-height: 8em;
+    min-height: 4em;
 }
 
 .value-icon {
@@ -606,7 +599,7 @@ transform: scale(1);
 
 /*
 ========================================
-Inputs
+sliders
 ========================================
 */
 
@@ -676,6 +669,12 @@ input[type=range]::-webkit-slider-thumb:active {
 input[type=range]::-moz-range-thumb:active {
     box-shadow: inset 0px 0px 400px 110px rgba(0, 0, 0, .1);
 }
+
+/*
+========================================
+Generate button
+========================================
+*/
 
 .generator-bottom {
     display: flex;
@@ -778,8 +777,16 @@ input[type=range]::-moz-range-thumb:active {
 
 }
 
+/*
+========================================
+Furnace output
+========================================
+*/
+
+
 .name-output {
     /*display: inline-block;*/
+    position: relative;
     margin: auto;
     width: 70%;
 }
@@ -823,7 +830,15 @@ input[type=range]::-moz-range-thumb:active {
     top:0;
     margin: 0.75em;
     width: calc(100% - 1.5em);
-    height: 3.5em;;
+    height: 3.5em;
+    transform: scale(1);
+    transition: all 1s;
+
+}
+
+.output-frame.open .output-door  {
+    height: 0;
+
 }
 
 .output-glow {
@@ -834,7 +849,20 @@ input[type=range]::-moz-range-thumb:active {
     margin: 0.75em;
     width: calc(100% - 1.5em);
     height: 0.125em;
+    z-index: 1;
+    transition: all 1s;
 }
+
+.output-frame.open .output-glow  {
+    height: 3.5em;
+
+}
+
+/*
+========================================
+Conveyor
+========================================
+*/
 
 .conveyor {
     position: relative;
@@ -842,18 +870,130 @@ input[type=range]::-moz-range-thumb:active {
 }
 
 .belt {
-    position: absolute;
-    top: -1em;
-    /*margin: 1em;*/
-    height: 5em;
+    position: relative;
+    top: -1.75em;
+    height: 3em;
     width: 100%;
-    background: #9E9E9E;
+    background: #424242;
     clip-path: polygon(6% 0, 94% 0, 100% 100%, 0 100%);
+    /*filter: dropShadow( 50px 50px 50px #DD2C00);*/
+}
+
+/*.belt .line {*/
+    /*position: absolute;*/
+    /*height: 0.5em;*/
+    /*width: 89.5%;*/
+    /*!*top:0;*!*/
+    /*!*width: 93.5%;*!*/
+    /*top:2.1em;*/
+    /*margin: 0 auto;*/
+    /*background-color: #212121;*/
+/*}*/
+
+.belt-inside {
+    position: absolute;
+    left: 1em;
+    height: 3em;
+    width: calc(100% - 2em);
+    background-color: #212121;
+    clip-path: polygon(6% 0, 94% 0, 100% 100%, 0 100%);
+    background-image: url("../img/roller.gif") ;
+    background-size: contain;
 }
 
 
 
-.name-list {
-    display: inline-block;
+
+.belt-roller {
+    position: absolute;
+    top: 1.15em;
+    left: -0.25em;
+    height: 4em;
+    width: calc(100% + 0.5em);
+    background: #424242;
+    border-radius: 1.35% 1.35% 4% 4% / 50% 50% 50% 50%;
+}
+
+.belt-roller-inside {
+    position: absolute;
+    top: -0.1em;
+    left: 1em;
+    height: 4em;
+    width: calc(100% - 2em);
+    background: #212121;
+    border-radius: 1.75% 1.75% 4% 4% / 50% 50% 50% 50%;
+    background-image: url("../img/roller.gif") ;
+    background-size: contain;
+
+}
+
+
+/*
+========================================
+Output tray
+========================================
+*/
+
+.output-tray {
+    position: absolute;
+    width: 100%;
+    height: 6em;
+
+    background: #424242;
+    margin-top: 2em;
+    clip-path: polygon(6% 0, 94% 0, 100% 100%, 0 100%);
+    /*z-index: -10;*/
+}
+
+.output-tray .left-panel {
+    position: absolute;
+    left: 0;
+    background: #757575;
+    width: calc(50% - 0.75em);
+    height: calc(100% - 1.5em);
+    margin: 0.75em;
+    margin-right: 0;
+    clip-path: polygon(10% 0, 100% 0, 100% 100%, 0 100%);
+    transition: all 1s;
+}
+
+.output-tray .right-panel {
+    position: absolute;
+    top:0;
+    right: 0;
+    background: #757575;
+    width: calc(50% - 0.75em);
+    height: calc(100% - 1.5em);
+    margin: 0.75em;
+    margin-left: 0;
+    clip-path: polygon(0 0, 90% 0, 100% 100%, 0 100%);
+    transition: all 1s;
+
+}
+
+
+.output-tray.open .left-panel {
+    width: 0;
+    clip-path: polygon(100% 0, 100% 0, 100% 100%, 0 100%);
+}
+
+.output-tray.open .right-panel {
+    width: 0;
+    clip-path: polygon(0 0, 0 0, 100% 100%, 0 100%);
+}
+
+
+
+
+h5.result {
+    position: absolute;
+    text-align: center;
+    width: 100%;
+    top: 1.25em;
+    margin: 0;
+    padding: 0;
+    z-index: 100;
+    color: #FFE0B2;
+    transition: all 1s;
 
 }
