@@ -3,11 +3,38 @@ let valueControls = document.querySelector(".value-control-container");
 let particleParent = document.querySelector(".particle-parent");
 let generateButton = document.getElementById("generate-button");
 let nameOutput = document.querySelector('.name-output');
-//
+let outputTray = document.querySelector('.output-tray');
+let leftScroll = document.querySelector('.value-selection-parent .left');
+let rightScroll = document.querySelector('.value-selection-parent .right');
+
+
+
 
 let valueList;
 let nameList;
 let selectedValues = {};
+
+
+//scroll controls
+
+
+leftScroll.addEventListener('click', ()=> {
+    let scrollOptions = {
+        left: valueSelectionContainer.scrollLeft - 300,
+        top: 0,
+        behavior: 'smooth'
+    };
+   valueSelectionContainer.scrollTo(scrollOptions);
+});
+
+rightScroll.addEventListener('click', ()=> {
+    let scrollOptions = {
+        left: valueSelectionContainer.scrollLeft + 300,
+        top: 0,
+        behavior: 'smooth'
+    };
+    valueSelectionContainer.scrollTo(scrollOptions);
+});
 
 
 //gets the names and the values from their JSON files.
@@ -132,6 +159,7 @@ const createValueSlider = (value) => {
 
 const addValueToList = (event) => {
     let value = event.target.value;
+    console.log(event);
     //prevents creating the same value multiple times
     if(!selectedValues[value]) {
         selectedValues[value] = 2;
@@ -144,12 +172,45 @@ const addValueToList = (event) => {
 };
 
 
+// Scroll helpers for the values list. Shows + hides the scroll buttons based on position of scroll
+const calculateScroll = () => {
+    let scrollPos = valueSelectionContainer.scrollLeft;
+    let maxWidth = valueSelectionContainer.scrollWidth - valueSelectionContainer.clientWidth;
+
+    if(scrollPos > 10) {
+        leftScroll.style.visibility = 'visible';
+    }
+    else {
+        leftScroll.style.visibility = 'hidden';
+    }
+
+    if (maxWidth - scrollPos < 10) {
+        rightScroll.style.visibility = 'hidden';
+    }
+    else {
+        rightScroll.style.visibility = 'visible';
+    }
+
+};
+
+
+
 // lists all of the values in an array
 const generateValues = () => {
     return new Promise(resolve => {
         for (let value in valueList) {
             let button = document.createElement('button');
-            button.innerHTML = valueList[value].name;
+            let text = document.createElement('p');
+            //apparently, we need to assign a value to EVERYTHING 🙄
+            text.value = value;
+            text.innerHTML = valueList[value].name;
+
+            let icon = document.createElement('span');
+            icon.value = value;
+            icon.classList.add('fas',`fa-${valueList[value].icon}`, );
+            button.appendChild(icon);
+
+            button.appendChild(text);
             button.value = value;
             button.addEventListener("click", addValueToList);
 
@@ -166,9 +227,14 @@ const generateValues = () => {
             button.appendChild(bolt3);
             button.appendChild(bolt4);
 
-            valueSelectionContainer.appendChild(button)
+            valueSelectionContainer.appendChild(button);
+
             resolve()
         }
+        valueSelectionContainer.addEventListener('scroll', calculateScroll);
+
+
+
     });
 
 };
@@ -176,6 +242,8 @@ const generateValues = () => {
 
 // generates a list of names based on the values chosen
 const generateNames = () => {
+
+    generateButton.classList.add('disabled');
     let nameScore = [];
 
     // loops through all names
@@ -202,23 +270,31 @@ const generateNames = () => {
         return b[1] - a[1];
     });
 
-    let bestScores = nameScore.slice(0,5);
-    let bestNames = bestScores.map((name) => {
-       return (name[0]);
-    });
+
+    let bestName = nameScore[0][0];
+
 
     let outputFrame = document.querySelector('.output-frame');
     outputFrame.classList.add('open');
 
     // removes old results
     Array.from(document.querySelectorAll('.result')).forEach((result) => {
-        result.remove();
+        if(result) {
+            // opens the goddamn (trap)door, no...
+            outputTray.classList.add('open');
+            result.style.transform = 'scale(0.05)';
+            result.style.top = '7.5em';
+            setTimeout(() => {
+                outputTray.classList.remove('open');
+                result.remove();
+            }, 1000)
+        }
     });
 
     // puts names into the DOM
     let result = document.createElement('h5');
     result.classList.add('result');
-    result.innerHTML = bestNames[0];
+    result.innerHTML = bestName;
     result.style.opacity = '0';
 
 
@@ -236,11 +312,16 @@ const generateNames = () => {
                 result.style.transition = 'all 0.75s cubic-bezier(0.55, 0.085, 0.68, 0.53)';
                 result.style.top = '7em';
                 result.style.transform = 'scale(1.45)';
-                result.style.color = '#FF5722';
+                result.style.color = '#FF9800';
 
+                // closes the goddamn (oven) door
+                // No, it's much better to face these kinds of things
+                // with a sense of poise and rationality 🎩
+                outputFrame.classList.remove('open');
+                generateButton.classList.remove('disabled')
 
             }, 1600)
-        }, 500)
+        }, 500);
     }, 350);
 
 
