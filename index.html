@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
-    <title>Design System Name Generator</title>
+    <title>Word Tagging Machine</title>
     <link rel="stylesheet" href="./css/style.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/solid.css" integrity="sha384-aj0h5DVQ8jfwc8DA7JiM+Dysv7z+qYrFYZR+Qd/TwnmpDI6UaB3GJRRTdY8jYGS4" crossorigin="anonymous">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/fontawesome.css" integrity="sha384-WK8BzK0mpgOdhCxq86nInFqSWLzR5UAsNg0MGX9aDaIIrFWQ38dGdhwnNCAoXFxL" crossorigin="anonymous">
@@ -15,7 +15,7 @@
     </header>
     <section class="app">
         <div class="column">
-            <h6 class="instructions">Select the values you'd associate with the word:</h6>
+            <h6 class="instructions">Select the values you'd associate with the word <input id="chosen-word-input" type="text"/>!</h6>
             <div class="value-selection-parent">
 
                 <div class="left">
@@ -58,7 +58,7 @@
                     <div class="plaque">
                         <div class="bolt top-left"></div>
                         <div class="bolt top-right" ></div>
-                        <h5>Word Tagging Machine
+                        <h5>Now Tagging: <span id="chosen-word-label"></span>
                         </h5>
                         <div class="bolt bottom-right"></div>
                         <div class="bolt bottom-left"></div>

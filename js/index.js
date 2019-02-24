@@ -1,11 +1,13 @@
-let valueSelectionContainer = document.querySelector('.value-selection');
-let valueControls = document.querySelector(".value-control-container");
-let particleParent = document.querySelector(".particle-parent");
-let generateButton = document.getElementById("generate-button");
-let nameOutput = document.querySelector('.name-output');
-let outputTray = document.querySelector('.output-tray');
-let leftScroll = document.querySelector('.value-selection-parent .left');
-let rightScroll = document.querySelector('.value-selection-parent .right');
+const chosenWordField = document.getElementById('chosen-word-input');
+const chosenWordLabel = document.getElementById('chosen-word-label');
+const valueSelectionContainer = document.querySelector('.value-selection');
+const valueControls = document.querySelector(".value-control-container");
+const particleParent = document.querySelector(".particle-parent");
+const generateButton = document.getElementById("generate-button");
+const nameOutput = document.querySelector('.name-output');
+const outputTray = document.querySelector('.output-tray');
+const leftScroll = document.querySelector('.value-selection-parent .left');
+const rightScroll = document.querySelector('.value-selection-parent .right');
 
 
 
@@ -13,8 +15,9 @@ let rightScroll = document.querySelector('.value-selection-parent .right');
 let valueList;
 let nameList;
 let selectedValues = {};
+let chosenWord;
 
-var config = {
+const config = {
     apiKey: "AIzaSyCsEgB5rpn8Bm5myQLrm7JgWztpzW2lnWU",
     authDomain: "name-value-store.firebaseapp.com",
     databaseURL: "https://name-value-store.firebaseio.com",
@@ -25,17 +28,13 @@ var config = {
 
 firebase.initializeApp(config);
 
+// See below for securing firebase to only one URL. Plz don't hack me 😢
+// https://stackoverflow.com/questions/37482366/is-it-safe-to-expose-firebase-apikey-to-the-public
+// https://console.developers.google.com/apis
+
 // Get a reference to the database service
 var database = firebase.database();
 
-// database.ref().once('value').then((snapshot) => {
-//     let result  = snapshot.val();
-//     console.log(result)
-// });
-
-// return firebase.database().ref('/users/' + userId).once('value').then(function(snapshot) {
-//     // ...
-// });
 
 
 //scroll controls
@@ -135,8 +134,8 @@ const createValueSlider = (value) => {
     let slider = document.createElement('input');
     slider.type = 'range';
     slider.max = '5';
-    slider.min = '1';
-    slider.value = '2';
+    slider.min = '-5';
+    slider.value = '0';
     slider.step = '0.05';
 
 
@@ -188,10 +187,9 @@ const createValueSlider = (value) => {
 
 const addValueToList = (event) => {
     let value = event.target.value;
-    console.log(event);
     //prevents creating the same value multiple times
     if(!selectedValues[value]) {
-        selectedValues[value] = 2;
+        selectedValues[value] = 0;
         createValueSlider(value);
     }
 
@@ -223,6 +221,21 @@ const calculateScroll = () => {
 };
 
 
+//TODO: make this thing a promise to not have weird async stuff going on.
+// picks the name with the smallest number of reviews to give it priority to be ranked
+// also sets the value of the
+const pickName = () => {
+    chosenWord = Object.values(nameList)[0];
+
+    Object.keys(nameList).forEach((name) => {
+            if (chosenWord.reviews > nameList[name].reviews) {
+                chosenWord = name;
+            }
+    });
+
+    chosenWordField.value = chosenWord;
+    chosenWordLabel.innerText = chosenWord;
+};
 
 // lists all of the values in an array
 const generateValues = () => {
@@ -269,8 +282,35 @@ const generateValues = () => {
 };
 
 
+// TODO: refactor to save to DB... stuff bellow return is mostly un-needed
 // generates a list of names based on the values chosen
-const generateNames = () => {
+const saveTagging = () => {
+
+    console.log(chosenWord);
+    console.log(selectedValues);
+    console.log(nameList);
+
+    if(nameList[chosenWord]) {
+
+        let previousReviews = nameList[chosenWord].reviews;
+
+        // let newValues = nameList[chosenWord].values.forEach()
+        console.log(nameList[chosenWord].values);
+        // nameList
+        nameList[chosenWord].values =
+
+        nameList[chosenWord].reviews += 1;
+
+    }
+    else {
+        nameList[chosenWord] = {
+            'reviews' : 1,
+            'values' : selectedValues
+        }
+    }
+
+
+    return;
 
     generateButton.classList.add('disabled');
     let nameScore = [];
@@ -370,7 +410,17 @@ const generateNames = () => {
 };
 
 
-generateButton.addEventListener("click", generateNames);
+generateButton.addEventListener("click", saveTagging);
+
+
+
+const updateChosenName = () => {
+    let word = event.target.value;
+    chosenWord = word;
+    chosenWordLabel.innerText = word;
+};
+
+chosenWordField.addEventListener('change', updateChosenName);
 
 
 
@@ -484,6 +534,8 @@ document.addEventListener('DOMContentLoaded', (event) => {
             setInterval(()=> {
                 particleEffect(particle, particleParent, 1, 50);
             }, 750);
+
+            pickName();
 
             // for (let name in nameList) {
             //     database.ref().child('names').child(name).child('reviews').set(1);
