@@ -14,6 +14,29 @@ let valueList;
 let nameList;
 let selectedValues = {};
 
+var config = {
+    apiKey: "AIzaSyCsEgB5rpn8Bm5myQLrm7JgWztpzW2lnWU",
+    authDomain: "name-value-store.firebaseapp.com",
+    databaseURL: "https://name-value-store.firebaseio.com",
+    projectId: "name-value-store",
+    storageBucket: "name-value-store.appspot.com",
+    // messagingSenderId: "625598566234"
+};
+
+firebase.initializeApp(config);
+
+// Get a reference to the database service
+var database = firebase.database();
+
+// database.ref().once('value').then((snapshot) => {
+//     let result  = snapshot.val();
+//     console.log(result)
+// });
+
+// return firebase.database().ref('/users/' + userId).once('value').then(function(snapshot) {
+//     // ...
+// });
+
 
 //scroll controls
 
@@ -41,49 +64,55 @@ rightScroll.addEventListener('click', ()=> {
 // There's almost certainly a better way to do this! 😅
 fetchJSON = () => {
 
+    let snapshot;
+
+    // gets the snapshot from the server. returns a promise
+    let getSnapshot = () => {
+        return database.ref().once('value').then((snap) => {
+            snapshot = snap.val();
+            return snap;
+        });
+    };
+
+
     let fetchValues = () => {
         return new Promise(resolve => {
-            fetch("https://jclahoot.github.io/design-system-name-generator/data/values.json",{
-                method: "get"
-            }).then(function (response) {
-                if(response.status !== 200) {
-                    console.log("something awful happened");
-                } else {
-                    return response.json();
-                }
-            }).then(function (response){
-                valueList = response.values;
-                resolve();
-            }).catch(function (error){
-                console.log("EPIC FAILLLLLL!!! THIS HAPPENED: " + error);
-            })
+            valueList = snapshot.values;
+            resolve();
         })
-
-
     };
 
     let fetchNames = () => {
         return new Promise(resolve => {
-            fetch("https://jclahoot.github.io/design-system-name-generator/data/names.json",{
-                method: "get"
-            }).then(function (response) {
-                if(response.status !== 200) {
-                    console.log("something awful happened");
-                } else {
-                    return response.json();
-                }
-            }).then(function (response){
-                nameList = response.names;
-                resolve();
-            }).catch(function (error){
-                console.log("EPIC FAILLLLLL!!! THIS HAPPENED: " + error);
-            })
+            nameList = snapshot.names;
+            resolve();
         });
 
 
     };
 
-    return Promise.all([fetchValues(), fetchNames()])
+
+    return new Promise(resolve => {
+
+        getSnapshot()
+            .then(fetchValues)
+            .then(fetchNames)
+            .then(() => {
+                resolve();
+            })
+
+
+
+        // snapshot
+        //     .then(fetchValues.bind(this,snapshot))
+        //     .then(fetchNames.bind(this,snapshot))
+        //     .then(()=> {
+        //         resolve();
+        // })
+
+    });
+
+
 };
 
 
@@ -280,14 +309,7 @@ const generateNames = () => {
     // removes old results
     Array.from(document.querySelectorAll('.result')).forEach((result) => {
         if(result) {
-            // opens the goddamn (trap)door, no...
-            outputTray.classList.add('open');
-            result.style.transform = 'scale(0.05)';
-            result.style.top = '7.5em';
-            setTimeout(() => {
-                outputTray.classList.remove('open');
-                result.remove();
-            }, 1000)
+
         }
     });
 
@@ -318,7 +340,21 @@ const generateNames = () => {
                 // No, it's much better to face these kinds of things
                 // with a sense of poise and rationality 🎩
                 outputFrame.classList.remove('open');
-                generateButton.classList.remove('disabled')
+                generateButton.classList.remove('disabled');
+
+                setTimeout(()=> {
+                    // opens the goddamn (trap)door, no...
+                    outputTray.classList.add('open');
+                    result.style.transform = 'scale(0.05)';
+                    result.style.top = '7.5em';
+
+                    setTimeout(() => {
+                        outputTray.classList.remove('open');
+                        result.remove();
+                    }, 1000);
+                }, 1000);
+
+
 
             }, 1600)
         }, 500);
@@ -448,8 +484,17 @@ document.addEventListener('DOMContentLoaded', (event) => {
             setInterval(()=> {
                 particleEffect(particle, particleParent, 1, 50);
             }, 750);
-            console.log("done");
+
+            // for (let name in nameList) {
+            //     database.ref().child('names').child(name).child('reviews').set(1);
+            // }
+
         });
 
+
+
+
 });
+
+
 

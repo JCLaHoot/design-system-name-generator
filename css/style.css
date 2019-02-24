@@ -239,6 +239,10 @@ body {
   ========================================
 */
 
+.instructions {
+    margin-top: 0.5em;
+}
+
 .value-selection-parent {
     position: relative;
     margin-bottom: 2em;
