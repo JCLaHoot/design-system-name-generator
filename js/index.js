@@ -1,13 +1,11 @@
-const chosenWordField = document.getElementById('chosen-word-input');
-const chosenWordLabel = document.getElementById('chosen-word-label');
-const valueSelectionContainer = document.querySelector('.value-selection');
-const valueControls = document.querySelector(".value-control-container");
-const particleParent = document.querySelector(".particle-parent");
-const generateButton = document.getElementById("generate-button");
-const nameOutput = document.querySelector('.name-output');
-const outputTray = document.querySelector('.output-tray');
-const leftScroll = document.querySelector('.value-selection-parent .left');
-const rightScroll = document.querySelector('.value-selection-parent .right');
+let valueSelectionContainer = document.querySelector('.value-selection');
+let valueControls = document.querySelector(".value-control-container");
+let particleParent = document.querySelector(".particle-parent");
+let generateButton = document.getElementById("generate-button");
+let nameOutput = document.querySelector('.name-output');
+let outputTray = document.querySelector('.output-tray');
+let leftScroll = document.querySelector('.value-selection-parent .left');
+let rightScroll = document.querySelector('.value-selection-parent .right');
 
 
 
@@ -15,7 +13,8 @@ const rightScroll = document.querySelector('.value-selection-parent .right');
 let valueList;
 let nameList;
 let selectedValues = {};
-let chosenWord;
+
+
 
 const config = {
     apiKey: "AIzaSyCsEgB5rpn8Bm5myQLrm7JgWztpzW2lnWU",
@@ -28,12 +27,9 @@ const config = {
 
 firebase.initializeApp(config);
 
-// See below for securing firebase to only one URL. Plz don't hack me 😢
-// https://stackoverflow.com/questions/37482366/is-it-safe-to-expose-firebase-apikey-to-the-public
-// https://console.developers.google.com/apis
-
 // Get a reference to the database service
 var database = firebase.database();
+
 
 
 
@@ -73,7 +69,6 @@ fetchJSON = () => {
         });
     };
 
-
     let fetchValues = () => {
         return new Promise(resolve => {
             valueList = snapshot.values;
@@ -90,30 +85,16 @@ fetchJSON = () => {
 
     };
 
-
     return new Promise(resolve => {
-
         getSnapshot()
             .then(fetchValues)
             .then(fetchNames)
             .then(() => {
                 resolve();
             })
-
-
-
-        // snapshot
-        //     .then(fetchValues.bind(this,snapshot))
-        //     .then(fetchNames.bind(this,snapshot))
-        //     .then(()=> {
-        //         resolve();
-        // })
-
     });
 
-
 };
-
 
 
 //Creates a value slider, which allows you to control how important a value is for the naming.
@@ -134,8 +115,8 @@ const createValueSlider = (value) => {
     let slider = document.createElement('input');
     slider.type = 'range';
     slider.max = '5';
-    slider.min = '-5';
-    slider.value = '0';
+    slider.min = '1';
+    slider.value = '2';
     slider.step = '0.05';
 
 
@@ -187,9 +168,10 @@ const createValueSlider = (value) => {
 
 const addValueToList = (event) => {
     let value = event.target.value;
+    console.log(event);
     //prevents creating the same value multiple times
     if(!selectedValues[value]) {
-        selectedValues[value] = 0;
+        selectedValues[value] = 2;
         createValueSlider(value);
     }
 
@@ -221,21 +203,6 @@ const calculateScroll = () => {
 };
 
 
-//TODO: make this thing a promise to not have weird async stuff going on.
-// picks the name with the smallest number of reviews to give it priority to be ranked
-// also sets the value of the
-const pickName = () => {
-    chosenWord = Object.values(nameList)[0];
-
-    Object.keys(nameList).forEach((name) => {
-            if (chosenWord.reviews > nameList[name].reviews) {
-                chosenWord = name;
-            }
-    });
-
-    chosenWordField.value = chosenWord;
-    chosenWordLabel.innerText = chosenWord;
-};
 
 // lists all of the values in an array
 const generateValues = () => {
@@ -282,35 +249,8 @@ const generateValues = () => {
 };
 
 
-// TODO: refactor to save to DB... stuff bellow return is mostly un-needed
 // generates a list of names based on the values chosen
-const saveTagging = () => {
-
-    console.log(chosenWord);
-    console.log(selectedValues);
-    console.log(nameList);
-
-    if(nameList[chosenWord]) {
-
-        let previousReviews = nameList[chosenWord].reviews;
-
-        // let newValues = nameList[chosenWord].values.forEach()
-        console.log(nameList[chosenWord].values);
-        // nameList
-        nameList[chosenWord].values =
-
-        nameList[chosenWord].reviews += 1;
-
-    }
-    else {
-        nameList[chosenWord] = {
-            'reviews' : 1,
-            'values' : selectedValues
-        }
-    }
-
-
-    return;
+const generateNames = () => {
 
     generateButton.classList.add('disabled');
     let nameScore = [];
@@ -349,7 +289,14 @@ const saveTagging = () => {
     // removes old results
     Array.from(document.querySelectorAll('.result')).forEach((result) => {
         if(result) {
-
+            // opens the goddamn (trap)door, no...
+            outputTray.classList.add('open');
+            result.style.transform = 'scale(0.05)';
+            result.style.top = '7.5em';
+            setTimeout(() => {
+                outputTray.classList.remove('open');
+                result.remove();
+            }, 1000)
         }
     });
 
@@ -380,21 +327,7 @@ const saveTagging = () => {
                 // No, it's much better to face these kinds of things
                 // with a sense of poise and rationality 🎩
                 outputFrame.classList.remove('open');
-                generateButton.classList.remove('disabled');
-
-                setTimeout(()=> {
-                    // opens the goddamn (trap)door, no...
-                    outputTray.classList.add('open');
-                    result.style.transform = 'scale(0.05)';
-                    result.style.top = '7.5em';
-
-                    setTimeout(() => {
-                        outputTray.classList.remove('open');
-                        result.remove();
-                    }, 1000);
-                }, 1000);
-
-
+                generateButton.classList.remove('disabled')
 
             }, 1600)
         }, 500);
@@ -410,17 +343,7 @@ const saveTagging = () => {
 };
 
 
-generateButton.addEventListener("click", saveTagging);
-
-
-
-const updateChosenName = () => {
-    let word = event.target.value;
-    chosenWord = word;
-    chosenWordLabel.innerText = word;
-};
-
-chosenWordField.addEventListener('change', updateChosenName);
+generateButton.addEventListener("click", generateNames);
 
 
 
@@ -534,19 +457,8 @@ document.addEventListener('DOMContentLoaded', (event) => {
             setInterval(()=> {
                 particleEffect(particle, particleParent, 1, 50);
             }, 750);
-
-            pickName();
-
-            // for (let name in nameList) {
-            //     database.ref().child('names').child(name).child('reviews').set(1);
-            // }
-
+            console.log("done");
         });
 
-
-
-
 });
-
-
 

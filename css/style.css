@@ -243,26 +243,6 @@ body {
     margin-top: 0.5em;
 }
 
-#chosen-word-input {
-    color: #FF5722;
-    /*color: #FFE0B2;*/
-    width: 30%;
-    border-radius: 1em;
-    border: none;
-    background-color: #424242;
-    margin: 0.25em;
-    margin-left: 0;
-    padding: 0 0.5em;
-    font-size: 1em;
-    font-weight: bold;
-    font-family: 'Nunito', 'open sans', sans-serif
-}
-
-#chosen-word-input:focus {
-    outline: none;
-    box-shadow: 0 0 0.125em 0.125em #FF5722;
-}
-
 .value-selection-parent {
     position: relative;
     margin-bottom: 2em;
@@ -732,9 +712,7 @@ input[type=range] {
     border-radius: 1em;
     height: 0.25em;
     width: 6em;
-    /*background: #212121;*/
-    background: linear-gradient(to right, #FF5722 5% , #212121 50%,  #4CAF50 95%);
-    /*background: red;*/
+    background: #212121;
     outline: none;
     margin: 0 0.5em;
     z-index: 9999;
