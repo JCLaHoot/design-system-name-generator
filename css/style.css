@@ -216,6 +216,11 @@ button {
     .generator-centre {
         width: 70%;
     }
+
+    footer {
+        padding-left: 10%;
+        padding-right: 10%;
+    }
 }
 
 @media (min-width: 1200px) {
@@ -227,6 +232,11 @@ button {
     }
     .generator-centre {
         width: 60%;
+    }
+
+    footer {
+        padding-left: 15%;
+        padding-right: 15%;
     }
 }
 
