@@ -55,6 +55,29 @@ rightScroll.addEventListener('click', ()=> {
 });
 
 
+// Scroll helpers for the values list. Shows + hides the scroll buttons based on position of scroll
+const calculateScroll = () => {
+    let scrollPos = valueSelectionContainer.scrollLeft;
+    let maxWidth = valueSelectionContainer.scrollWidth - valueSelectionContainer.clientWidth;
+
+    if(scrollPos > 10) {
+        leftScroll.style.visibility = 'visible';
+    }
+    else {
+        leftScroll.style.visibility = 'hidden';
+    }
+
+    if (maxWidth - scrollPos < 10) {
+        rightScroll.style.visibility = 'hidden';
+    }
+    else {
+        rightScroll.style.visibility = 'visible';
+    }
+
+};
+
+
+
 //gets the names and the values from their JSON files.
 // There's almost certainly a better way to do this! 😅
 fetchJSON = () => {
@@ -99,7 +122,7 @@ fetchJSON = () => {
 
 //Creates a value slider, which allows you to control how important a value is for the naming.
 // Also creates labels, and allows you to erase a value.
-const createValueSlider = (value) => {
+const createValueSlider = (value, button) => {
     let container = document.createElement('div');
     container.classList.add('value-control');
 
@@ -152,6 +175,14 @@ const createValueSlider = (value) => {
         if (Object.keys(selectedValues).length === 0) {
             generateButton.classList.add('disabled')
         }
+
+    //    add the value back to the list:
+        button.style.position = null;
+        button.style.left = null;
+        button.style.top = null;
+        button.style.transition = null;
+        button.style.transform = null;
+
     };
 
     let x = document.createElement("span");
@@ -166,45 +197,34 @@ const createValueSlider = (value) => {
 
 };
 
-const addValueToList = (event) => {
+
+// onClick event for the value selection
+const addValueToList = (button) => {
     let value = event.target.value;
-    console.log(event);
     //prevents creating the same value multiple times
-    if(!selectedValues[value]) {
+    if(selectedValues[value] === undefined) {
         selectedValues[value] = 2;
-        createValueSlider(value);
+        createValueSlider(value, button);
     }
 
+    button.style.position = 'absolute';
+    button.style.left = '6.5em';
+    button.style.top = '4.5em';
+    button.style.transition = 'all 1s';
+
+    setTimeout( () => {
+        button.style.top = '8em';
+        button.style.transform = 'scale(0)'
+    }, 200);
 
     generateButton.classList.remove('disabled')
-
-};
-
-
-// Scroll helpers for the values list. Shows + hides the scroll buttons based on position of scroll
-const calculateScroll = () => {
-    let scrollPos = valueSelectionContainer.scrollLeft;
-    let maxWidth = valueSelectionContainer.scrollWidth - valueSelectionContainer.clientWidth;
-
-    if(scrollPos > 10) {
-        leftScroll.style.visibility = 'visible';
-    }
-    else {
-        leftScroll.style.visibility = 'hidden';
-    }
-
-    if (maxWidth - scrollPos < 10) {
-        rightScroll.style.visibility = 'hidden';
-    }
-    else {
-        rightScroll.style.visibility = 'visible';
-    }
-
 };
 
 
 
-// lists all of the values in an array
+
+
+// creates the value buttons
 const generateValues = () => {
     return new Promise(resolve => {
         for (let value in valueList) {
@@ -221,7 +241,7 @@ const generateValues = () => {
 
             button.appendChild(text);
             button.value = value;
-            button.addEventListener("click", addValueToList);
+            button.addEventListener("click", addValueToList.bind(this, button));
 
             let bolt1 = document.createElement('div');
             bolt1.classList.add('bolt', 'top-left');
