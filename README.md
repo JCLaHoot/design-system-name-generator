@@ -1,4 +1,4 @@
-# design-system-name-generator 
+# Design System Name Generator 
 https://designsystem.name/
 
 Use this tool to figure out a name for your design system, based on the values that are important to you and your organisation.
