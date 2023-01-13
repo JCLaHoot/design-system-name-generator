@@ -1,6 +1,14 @@
 # Design System Name Generator 🏭
 https://designsystem.name/
 
+🚧🚧🚧 CURRENTLY BROKEN 🚧🚧🚧
+
+So... I accidentaly wiped the database while working on the redesigned version of this (see https://www.figma.com/file/vPnn3vxQwqK9PixQ3oPhMH/Design-System-Name-Generator-%F0%9F%8F%AD?node-id=1059%3A20414&t=Z0Uig2Yvs9q0MPOf-1 )
+I'm currently working on my design portfolio, but this is next on my list!
+
+🚧🚧🚧 CURRENTLY BROKEN 🚧🚧🚧
+
+
 Use this tool to figure out a name for your design system, based on the values that are important to you and your organisation.
 
 ## Word tagging machine:
